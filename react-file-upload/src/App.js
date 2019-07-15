@@ -3,18 +3,34 @@ import "./App.css";
 import axios from 'axios';
 
 constructor(props) {
-  super(props);
-    this.state = {
-      selectedFile: null
+    super(props);
+      this.state = {
+        selectedFile: null
+      }
+   
+  }
+
+maxSelectFile=(event)=>{
+  let files = event.target.files // create file object
+      if (files.length > 3) { 
+         const msg = 'Only 3 images can be uploaded at a time'
+         event.target.value = null // discard selected file
+         console.log(msg)
+        return false;
+
     }
- 
+  return true;
+
 }
 
 onChangeHandler=event=>{
-  this.setState({
-    selectedFile: event.target.files[0],
-    loaded: 0,
+  var files = event.target.files
+  if(this.maxSelectFile(event)){ 
+  // if return true allow to setState
+     this.setState({
+     selectedFile: files
   })
+}
 }
 onClickHandler = () => {
   const data = new FormData()
